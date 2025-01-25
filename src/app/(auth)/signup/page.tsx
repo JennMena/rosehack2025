@@ -1,64 +1,44 @@
+import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
+import { SignUp } from "@clerk/nextjs";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+export const metadata = {
+    title: "Sign Up | EchoSphere",
+    description: "Create your account and start your learning journey.",
+};
 
-export default function LoginForm() {
-  return (
-    <Card className="mx-auto max-w-sm">
-      <CardHeader>
-        <CardTitle className="text-xl">Sign Up</CardTitle>
-        <CardDescription>
-          Enter your information to create an account
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <div className="grid gap-4">
-          <div className="grid grid-cols-2 gap-4">
-            <div className="grid gap-2">
-              <Label htmlFor="first-name">First name</Label>
-              <Input id="first-name" placeholder="Max" required />
+export default function SignUpPage() {
+    return (
+        <div className="container flex h-screen w-screen flex-col items-center justify-center">
+            <Link
+                href="/"
+                className={cn(
+                    buttonVariants({ variant: "ghost" }),
+                    "absolute left-4 top-4 md:left-8 md:top-8"
+                )}
+            >
+                <>
+                    <ChevronLeft className="mr-2 h-4 w-4" />
+                    Back
+                </>
+            </Link>
+            <div className="mx-auto flex w-full flex-col justify-center gap-6 sm:w-[350px]">
+                <div className="flex flex-col gap-2 text-center">
+                    <h1 className="text-2xl font-semibold tracking-tight">
+                        Join NEED NAME
+                    </h1>
+                    <p className="text-sm text-muted-foreground">
+                        Create your account to start your learning journey
+                    </p>
+                </div>
+
+                <div className="flex w-full h-full items-center justify-center">
+                    <SignUp routing="hash" fallbackRedirectUrl="/profile" signInFallbackRedirectUrl="/login"
+                    signInUrl="/login"/>
+                </div>
             </div>
-            <div className="grid gap-2">
-              <Label htmlFor="last-name">Last name</Label>
-              <Input id="last-name" placeholder="Robinson" required />
-            </div>
-          </div>
-          <div className="grid gap-2">
-            <Label htmlFor="email">Email</Label>
-            <Input
-              id="email"
-              type="email"
-              placeholder="m@example.com"
-              required
-            />
-          </div>
-          <div className="grid gap-2">
-            <Label htmlFor="password">Password</Label>
-            <Input id="password" type="password" />
-          </div>
-          <Button type="submit" className="w-full">
-            Create an account
-          </Button>
-          <Button variant="outline" className="w-full">
-            Sign up with GitHub
-          </Button>
         </div>
-        <div className="mt-4 text-center text-sm">
-          Already have an account?{" "}
-          <Link href="/login" className="underline">
-            Sign in
-          </Link>
-        </div>
-      </CardContent>
-    </Card>
-  );
+    );
 }

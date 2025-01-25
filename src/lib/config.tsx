@@ -6,8 +6,8 @@ import { RiInstagramFill } from "react-icons/ri";
 export const BLUR_FADE_DELAY = 0.15;
 
 export const siteConfig = {
-  name: "acme.ai",
-  description: "Automate your workflow with AI",
+  name: "EchoSphere",
+  description: "Level up your social skills with AI-powered conversation practice",
   url: process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
   keywords: ["SaaS", "Template", "Next.js", "React", "Tailwind CSS"],
   links: {
@@ -46,7 +46,7 @@ export const siteConfig = {
         ],
       },
     },
-    {
+    /*{
       trigger: "Solutions",
       content: {
         items: [
@@ -83,13 +83,13 @@ export const siteConfig = {
           },
         ],
       },
-    },
-    {
+    },*/
+    /*{
       href: "/blog",
       label: "Blog",
-    },
+    },*/
   ],
-  pricing: [
+  /*pricing: [
     {
       name: "BASIC",
       href: "#",
@@ -141,7 +141,7 @@ export const siteConfig = {
       buttonText: "Subscribe",
       isPopular: false,
     },
-  ],
+  ],*/
   faqs: [
     {
       question: "What is acme.ai?",
@@ -194,56 +194,6 @@ export const siteConfig = {
           offer premium support plans for enterprises with more complex needs.
         </span>
       ),
-    },
-  ],
-  footer: [
-    {
-      title: "Product",
-      links: [
-        { href: "#", text: "Features", icon: null },
-        { href: "#", text: "Pricing", icon: null },
-        { href: "#", text: "Documentation", icon: null },
-        { href: "#", text: "API", icon: null },
-      ],
-    },
-    {
-      title: "Company",
-      links: [
-        { href: "#", text: "About Us", icon: null },
-        { href: "#", text: "Careers", icon: null },
-        { href: "#", text: "Blog", icon: null },
-        { href: "#", text: "Press", icon: null },
-        { href: "#", text: "Partners", icon: null },
-      ],
-    },
-    {
-      title: "Resources",
-      links: [
-        { href: "#", text: "Community", icon: null },
-        { href: "#", text: "Contact", icon: null },
-        { href: "#", text: "Support", icon: null },
-        { href: "#", text: "Status", icon: null },
-      ],
-    },
-    {
-      title: "Social",
-      links: [
-        {
-          href: "#",
-          text: "Twitter",
-          icon: <FaTwitter />,
-        },
-        {
-          href: "#",
-          text: "Instagram",
-          icon: <RiInstagramFill />,
-        },
-        {
-          href: "#",
-          text: "Youtube",
-          icon: <FaYoutube />,
-        },
-      ],
     },
   ],
 };

@@ -18,16 +18,16 @@ export default function Home() {
     <main>
       <Header />
       <Hero />
-      <Logos />
+      {/* <Logos /> */}
       <Problem />
-      <Solution />
+      {/*<Solution />*/}
       <HowItWorks />
-      <TestimonialsCarousel />
-      <Features />
-      <Testimonials />
-      <Pricing />
+      {/*<TestimonialsCarousel />*/}
+      {/*<Features />*/}
+      {/*<Testimonials />*/}
+      {/*<Pricing />*/}
       <FAQ />
-      <Blog />
+      {/*<Blog />*/}
       <CTA />
       <Footer />
     </main>
