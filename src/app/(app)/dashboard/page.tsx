@@ -2,7 +2,8 @@ import React from 'react';
 
 const DashboardPage: React.FC = () => {
     return (
-        <div>
+        <div className="w-[872px] h-[3312px] relative">
+            
             <div className="w-[1252px] h-[3312px] relative">
                 <div className="w-[1094px] h-[3146px] left-[63px] top-[83px] absolute bg-[#fefae0]" />
                 <div className="w-[1094px] h-[3146px] left-[63px] top-[83px] absolute bg-[#fefae0]" />
@@ -13,7 +14,7 @@ const DashboardPage: React.FC = () => {
                 </div>
                 <div className="h-[753px] pb-3.5 left-[152px] top-[2167px] absolute flex-col justify-start items-start inline-flex">
                     <div className="w-[897px] h-[218px] relative">
-                        <div className="w-[897px] h-[54px] left-0 top-[164px] absolute text-[#412207] text-2xl font-extralight font-['Lexend']">The more notes you take, the better Annette can personalize your experience.</div>
+                        <div className="w-[897px] h-[54px] left-0 top-[164px] absolute text-[#412207] text-2xl font-normal font-['Lexend']">The more notes you take, the better Annette can personalize your experience.</div>
                         <div className="w-[897px] h-[60px] left-0 top-[69px] absolute text-[#412207] text-[32px] font-light font-['Lexend']">Look over your guided notes one last time and move on to the mock interview!</div>
                         <div className="w-[419px] h-[50px] left-0 top-0 absolute text-[#412207] text-[40px] font-normal font-['Lexend']">Ready to practice?</div>
                     </div>
