@@ -9,8 +9,8 @@ type Link = {
 };
 
 const links: Link[] = [
-  { text: "About", url: "#" },
-  { text: "Services", url: "#" },
+  { text: "Home", url: "/profile" },
+  { text: "Motivation", url: "#motivation" },
 ];
 
 export default function Footer() {
@@ -20,12 +20,18 @@ export default function Footer() {
         <div className="flex items-center gap-x-2">
           <img
             className="h-8 w-8 rounded-full"
-            src="https://magicui.design/icon.png"
+            src="/Logo.png"
             alt="Company Logo"
           />
           <h2 className="text-base font-bold text-neutral-900 dark:text-white">
             {siteConfig.name}
           </h2>
+        </div>
+
+        <div className="flex items-center justify-center gap-x-10">
+          <p className="text-[15px]/normal font-medium text-neutral-400 dark:text-neutral-400">
+            © RoseHack 2025 - Nina & Jenn :D
+          </p>
         </div>
 
         <ul className="flex items-center justify-center gap-x-10">

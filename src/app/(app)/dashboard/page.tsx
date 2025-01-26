@@ -1,79 +1,165 @@
-import React from 'react';
+"use client";
+import React, { useState } from 'react';
+import ChatArea from '../(components)/chat';
 
 const DashboardPage: React.FC = () => {
+    const [company, setCompany] = useState<string>("");
+    const [values, setValues] = useState<string>("");
+    const [position, setPosition] = useState<string>("");
+    const [interviewer, setInterviewer] = useState<string>("");
+
+    const handleCompany = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setCompany(event.target.value);
+    };
+
+    const handleValues = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setValues(event.target.value);
+    };
+
+    const handlePosition = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setPosition(event.target.value);
+    };
+
+    const handleInterviewer = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setInterviewer(event.target.value);
+    };
+
     return (
-        <div className="w-[872px] h-[3312px] relative">
-            
-            <div className="w-[1252px] h-[3312px] relative">
-                <div className="w-[1094px] h-[3146px] left-[63px] top-[83px] absolute bg-[#fefae0]" />
-                <div className="w-[1094px] h-[3146px] left-[63px] top-[83px] absolute bg-[#fefae0]" />
-                <div className="w-[1208.29px] h-[105.91px] left-[13px] top-[2940.68px] absolute">
-                    <img className="w-[1423px] h-[70px] left-[0px] top-[0px]" src="Vine.png" />
+        <div className=" relative">
+
+            {/* Top section */}
+            <div className="flex flex-col justify-center items-center">
+                <div className="w-full h-auto max-w-full">
+                    <img src="Sparkle.png" alt="Sparkle" />
                 </div>
-                <div className="h-[753px] pb-3.5 left-[152px] top-[2167px] absolute flex-col justify-start items-start inline-flex">
-                    <div className="w-[897px] h-[218px] relative">
-                        <div className="w-[897px] h-[54px] left-0 top-[164px] absolute text-[#412207] text-2xl font-normal font-['Lexend']">The more notes you take, the better Annette can personalize your experience.</div>
-                        <div className="w-[897px] h-[60px] left-0 top-[69px] absolute text-[#412207] text-[32px] font-light font-['Lexend']">Look over your guided notes one last time and move on to the mock interview!</div>
-                        <div className="w-[419px] h-[50px] left-0 top-0 absolute text-[#412207] text-[40px] font-normal font-['Lexend']">Ready to practice?</div>
-                    </div>
-                    <div className="w-[897px] h-[521px] relative">
-                        <div className="w-[897px] h-[60px] left-0 top-[461px] absolute text-[#412207] text-[32px] font-light font-['Lexend']">hint: start with small talk to build an initial connection.<br />(hints from the ai?)</div>
-                        <div className="w-[573px] h-[347px] left-[324px] top-0 absolute bg-[#606c38]/60" />
-                        <div className="w-[573px] h-[63px] left-[324px] top-[366px] absolute bg-[#606c38]/20" />
-                        <img className="w-[300px] h-[430.71px] left-0 top-0 absolute" src="Annette.png" />
-                        <div className="w-[424px] h-[61px] left-[335px] top-[261px] absolute text-[#402207] text-[28px] font-light font-['Lexend']">Hello, I am a recruiter from Company Name.</div>
-                        <div className="w-[546px] h-[42px] left-[335px] top-[377px] absolute text-[#402207]/60 text-[28px] font-light font-['Lexend']">type here</div>
-                    </div>
+                <div className="text-center text-[#412207] dark:text-gray-300 text-6xl p-4 font-bold font-['Lexend']">
+                    Prepare for Success
                 </div>
-                <div className="w-[1208.29px] h-[105.91px] left-[3px] top-[2041.10px] absolute">
-                    <img className="w-[1423px] h-[70px] left-[0px] top-[0px]" src="Vine.png" />
+                <div className="w-full h-auto max-w-full">
+                    <img src="Sparkle.png" alt="Sparkle" />
                 </div>
-                <div className="h-[319px] pb-1.5 left-[161px] top-[386px] absolute flex-col justify-start items-start gap-3.5 inline-flex">
-                    <div className="w-[419px] h-[50px] text-[#412207] text-[40px] font-normal font-['Lexend']">How it works:</div>
-                    <div className="w-[897px] h-[249px] text-[#412207] text-[32px] font-light font-['Lexend']">Let us guide your research as you prepare for your interview. Follow prompts and questions to organize important information  <br /><br />Then, upload your resume for a mock interview with our chatbot.</div>
-                </div>
-                <div className="w-[1238px] h-[466px] left-[11px] top-[867px] absolute">
-                    <div className="origin-top-left rotate-[1.93deg] w-[1233px] h-[156.27px] left-[5.25px] top-[259px] absolute">
-                        <img className="w-[1400px] h-[115px] left-[-1.14px] top-[33.98px] absolute origin-top-left rotate-[-2.06deg]" src="SparkleVine.png" />
+            </div>
+
+
+
+            {/* Info section */}
+            <div className="w-full max-w-4xl mx-auto px-4 py-8">
+                <div className="flex flex-col gap-6">
+                    <div className="text-[#412207] dark:text-gray-300 text-3xl font-normal font-['Lexend']">
+                        How it works:
                     </div>
-                    <div className="w-[811px] h-[444.71px] left-[227px] top-0 absolute">
-                        <img className="w-[300px] h-[430.71px] left-[511px] top-[14px] absolute" src="Annette.png" />
-                        <div className="w-[553px] h-[151px] left-0 top-0 absolute bg-[#f7ca98] rounded-[40px] border-4 border-[#402207]" />
-                        <div className="w-[489px] h-[131px] left-[41px] top-[12px] absolute"><span className="text-[#402207] text-[32px] font-semibold font-['Lexend']">Hello, I’m Annette. <br /></span><span className="text-[#402207] text-[32px] font-light font-['Lexend']">I will be taking notes along side you to guide your research.</span></div>
-                        <div className="w-[453px] h-[107px] left-[76px] top-[179px] absolute bg-[#dda15e] rounded-[40px] border-4 border-[#402207]" />
-                        <div className="w-[424px] h-[61px] left-[104px] top-[198px] absolute text-[#402207] text-[28px] font-light font-['Lexend']">Whenever you are ready, I will hold your mock interview.</div>
-                    </div>
-                </div>
-                <div className="h-[739px] pb-3.5 left-[152px] top-[1302px] absolute flex-col justify-start items-start gap-[17px] inline-flex">
-                    <div className="w-[897px] h-[233px] relative">
-                        <div className="w-[419px] h-[50px] left-0 top-0 absolute text-[#412207] text-[40px] font-normal font-['Lexend']">Start with the basics:</div>
-                        <div className="w-[600px] h-[61px] left-0 top-[67px] absolute text-[#412207] text-[32px] font-light font-['Lexend']">What company are you applying for?</div>
-                        <div className="w-[897px] h-[105px] left-0 top-[128px] absolute bg-[#606c38]/60" />
-                    </div>
-                    <div className="w-[897px] h-[229px] relative">
-                        <div className="w-[600px] h-[61px] left-0 top-0 absolute text-[#412207] text-[32px] font-light font-['Lexend']">What are the company’s values?</div>
-                        <div className="w-[897px] h-[61px] left-0 top-[46px] absolute text-[#412207] text-2xl font-extralight font-['Lexend']">Check out the company website. Try looking at their “About” or “Meet the Team” page.</div>
-                        <div className="w-[897px] h-[105px] left-0 top-[124px] absolute bg-[#606c38]/60" />
-                    </div>
-                    <div className="w-[897px] h-[229px] relative">
-                        <div className="w-[600px] h-[61px] left-0 top-0 absolute text-[#412207] text-[32px] font-light font-['Lexend']">What job are you applying for?</div>
-                        <div className="w-[897px] h-[61px] left-0 top-[46px] absolute text-[#412207] text-2xl font-extralight font-['Lexend']">Think about what kind of candidate they are looking for. What are the most important requirements?</div>
-                        <div className="w-[897px] h-[105px] left-0 top-[124px] absolute bg-[#606c38]/60" />
-                    </div>
-                </div>
-                <div className="w-[1208.29px] h-[105.91px] left-0 top-[724.83px] absolute">
-                    <img className="w-[1423px] h-[70px] left-[2.91px] top-[5.50px]" src="Vine.png" />
-                </div>
-                <div className="w-[1249px] h-[219.72px] left-[-15px] top-[127px] absolute">
-                    <div className="w-[1237px] h-[60.72px] left-0 top-[159px] absolute">
-                        <img className="w-[1400px] h-[50px] left-0 top-0 absolute" src="Sparkle.png" />
-                    </div>
-                    <div className="left-[228px] top-[47px] absolute text-[#412207] text-[80px] font-bold font-['Lexend']">Prepare for Success</div>
-                    <div className="w-[1237px] h-[60.72px] left-[12px] top-0 absolute">
-                        <img className="w-[1400px] h-[50px] left-0 top-0 absolute" src="Sparkle.png" />
+                    <div className="text-[#412207] dark:text-gray-300 text-2xl font-light font-['Lexend']">
+                        Let us assist you in preparing for your interview by guiding your research. Follow the prompts and questions to organize key information. <br></br><br></br>Based on your interests, resume, and the provided scenario details, you'll have a mock interview with our chatbot.
                     </div>
                 </div>
             </div>
+
+            {/* Annette's section */}
+            <div className="relative w-full max-w-4xl mx-auto">
+                <div className="w-full h-auto">
+                    <img className="w-full h-auto max-w-full" src="Vine.png" alt="Vine" />
+                </div>
+            </div>
+            <div className="relative w-full max-w-4xl mx-auto px-4 py-12 h-[300px]">
+                <div className="flex flex-col gap-6">
+                    <div className="flex flex-row items-center gap-6">
+                        <div className='absolute right-0 z-0 mt-36 '>
+                            <img className="w-[250px] h-[357.14px]" src="Annette.png" alt="Annette" />
+                        </div>
+                        <div className="flex flex-col">
+                            <div className="absolute w-2/4 ml-[14rem]  bg-[#f7ca98] rounded-[40px] border-4 border-[#402207] p-6">
+                                <span className="text-[#402207] text-2xl font-semibold font-['Lexend']">
+                                    Hello, I’m Annette.
+                                </span>
+                                <span className="text-[#402207] text-2xl font-light font-['Lexend']">
+                                    {" "} I'll be taking notes with you and helping you organize your practice.
+                                </span>
+                            </div>
+                            <div className="absolute w-4/7 mt-40 ml-[9rem]  bg-[#dda15e] rounded-[40px] border-4 border-[#402207] p-6">
+                                <span className="text-[#402207] text-xl font-light font-['Lexend']">
+                                    When you're ready, I'll hold  your mock interview.
+                                </span>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+            <div className="relative w-full max-w-4xl mx-auto mb-5">
+                <div className="absolute inset-0 z-0">
+                    <img className="w-full h-auto max-w-full" src="SparkleVine.png" alt="Vine" />
+                </div>
+            </div>
+
+
+            {/* Main content section */}
+            <div className="relative w-full max-w-4xl mx-auto px-4 py-8 mt-20 ">
+                <div className="flex flex-col gap-8">
+                    {/* Start with basics */}
+                    <div className="flex flex-col gap-4">
+                        <div className="text-[#412207] dark:text-gray-300 text-3xl font-normal font-['Lexend']">
+                            Start with the essentials:
+                        </div>
+                        <div className="text-[#412207] dark:text-gray-300 text-2xl font-light font-['Lexend']">
+                            Which company are you applying to?
+                        </div>
+                        <textarea
+                            onChange={handleCompany}
+                            className="w-full h-[100px] p-4 mt-2 bg-[#f3f3f3] dark:bg-[#444] border border-[#606c38] rounded-lg text-lg text-[#412207] dark:text-gray-300  resize-none"
+                            placeholder="Enter the company's name..."
+                        ></textarea>
+                    </div>
+
+                    {/* Next question */}
+                    <div className="flex flex-col gap-4 mt-3">
+                        <div className="text-[#412207] dark:text-gray-300 text-2xl font-light font-['Lexend']">
+                            What are the core values of the company?
+                        </div>
+                        <textarea
+                            onChange={handleValues}
+                            className="w-full h-[100px] p-4 mt-2 bg-[#f3f3f3] dark:bg-[#444] border border-[#606c38] rounded-lg text-lg text-[#412207] dark:text-gray-300  resize-none"
+                            placeholder="Visit the company website, and take a look at the “About” or “Meet the Team” section for insights."
+                        ></textarea>
+                    </div>
+
+                    {/* Job-related question */}
+                    <div className="flex flex-col gap-4 mt-3">
+                        <div className="text-[#412207] dark:text-gray-300 text-2xl font-light font-['Lexend']">
+                            What position are you applying for?
+                        </div>
+                        <textarea
+                            onChange={handlePosition}
+                            className="w-full h-[100px] p-4 mt-2 bg-[#f3f3f3] dark:bg-[#444] border border-[#606c38] rounded-lg text-lg text-[#412207] dark:text-gray-300  resize-none"
+                            placeholder="Consider the type of candidate the company is seeking. What are the key qualifications and skills they prioritize?"
+                        ></textarea>
+                    </div>
+
+                    {/* Additional question */}
+                    <div className="flex flex-col gap-4 mt-3">
+                        <div className="text-[#412207] dark:text-gray-300 text-2xl font-light font-['Lexend']">
+                            Do you know anything about the interviewer?
+                        </div>
+                        <textarea
+                            onChange={handleInterviewer}
+                            className="w-full h-[100px] p-4 mt-2 bg-[#f3f3f3] dark:bg-[#444] border border-[#606c38] rounded-lg text-lg text-[#412207] dark:text-gray-300  resize-none"
+                            placeholder="If possible, gather information such as their LinkedIn profile or articles they’ve written to tailor your responses."
+                        ></textarea>
+                    </div>
+                </div>
+            </div>
+
+            {/*Chat Area*/}
+            <div className="relative w-full max-w-4xl mx-auto">
+                <div className="w-full h-auto">
+                    <img className="w-full h-auto max-w-full" src="Vine.png" alt="Vine" />
+                </div>
+            </div>
+            <div className='mt-[-5rem]'>
+                <ChatArea />
+            </div>
+
+
         </div>
     );
 };

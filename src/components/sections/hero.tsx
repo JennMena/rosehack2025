@@ -7,23 +7,24 @@ import HeroVideoDialog from "@/components/magicui/hero-video";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import Image from "next/image";
 
 const ease = [0.16, 1, 0.3, 1];
 
 function HeroPill() {
   return (
     <motion.a
-      href="/blog/introducing-acme-ai"
+      href="#"
       className="flex w-auto items-center space-x-2 rounded-full bg-primary/20 px-2 py-1 ring-1 ring-accent whitespace-pre"
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, ease }}
     >
       <div className="w-fit rounded-full bg-accent px-2 py-0.5 text-center text-xs font-medium text-primary sm:text-sm">
-        📣 Announcement
+        🚀 Level Up
       </div>
       <p className="text-xs font-medium text-primary sm:text-sm">
-        Introducing Acme.ai
+        Your Social and Networking Skills!
       </p>
       <svg
         width="12"
@@ -55,21 +56,22 @@ function HeroTitles() {
           staggerChildren: 0.2,
         }}
       >
-        {["Automate", "your", "workflow", "with AI"].map((text, index) => (
-          <motion.span
-            key={index}
-            className="inline-block px-1 md:px-2 text-balance font-semibold"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-              duration: 0.8,
-              delay: index * 0.2,
-              ease,
-            }}
-          >
-            {text}
-          </motion.span>
-        ))}
+        {["Let", "Your", "Career", "Bloom", "with", "Confidence"]
+          .map((text, index) => (
+            <motion.span
+              key={index}
+              className="inline-block px-1 md:px-2 text-balance font-semibold"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: 0.8,
+                delay: index * 0.2,
+                ease,
+              }}
+            >
+              {text}
+            </motion.span>
+          ))}
       </motion.h1>
       <motion.p
         className="mx-auto max-w-xl text-center text-lg leading-7 text-muted-foreground sm:text-xl sm:leading-9 text-balance"
@@ -81,7 +83,7 @@ function HeroTitles() {
           ease,
         }}
       >
-        No matter what problem you have, our AI can help you solve it.
+        Boost your career with AI-driven practice, feedback, and progress tracking for better communication and networking skills.
       </motion.p>
     </div>
   );
@@ -104,17 +106,17 @@ function HeroCTA() {
           )}
         >
           <Icons.logo className="h-6 w-6" />
-          Get started for free
+          Start Practicing Now
         </Link>
       </motion.div>
-      <motion.p
+      {/*<motion.p
         className="mt-5 text-sm text-muted-foreground"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.0, duration: 0.8 }}
       >
         7 day free trial. No credit card required.
-      </motion.p>
+      </motion.p>*/}
     </>
   );
 }
@@ -142,9 +144,39 @@ export default function Hero2() {
   return (
     <section id="hero">
       <div className="relative flex w-full h-screen flex-col items-center justify-start px-4 pt-32 sm:px-6 sm:pt-24 md:pt-32 lg:px-8">
-        <HeroPill />
-        <HeroTitles />
-        <HeroCTA />
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 w-full h-full">
+          {/* Left Column: Text Content */}
+          <div className="flex flex-col space-y-4 mr-[-5rem]">
+            <div className="flex justify-center w-full">
+              <div className="flex items-center">
+                <HeroPill />
+              </div>
+            </div>
+            <div className="flex justify-center w-full">
+              <HeroTitles />
+            </div>
+
+            <HeroCTA />
+          </div>
+          {/* Right Column: Image */}
+          <div className="md:block hidden">
+            <div className="flex justify-center h-full">
+              <Image
+                src="/AnnetteFull.png"
+                alt="Annette"
+                width={800}
+                height={800}
+                className="object-contain max-h-full"
+                style={{
+                  maxHeight: 'calc(100vh - 6rem)', marginLeft: '-4rem',
+                  animation: 'fadeIn 3s forwards',
+                }}
+
+              />
+            </div>
+          </div>
+
+        </div>
         {/*<HeroImage />*/}
         <div className="pointer-events-none absolute inset-x-0 -bottom-12 h-1/3 bg-gradient-to-t from-background via-background to-transparent lg:h-1/4"></div>
       </div>

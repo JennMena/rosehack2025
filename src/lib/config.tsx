@@ -18,7 +18,7 @@ export const siteConfig = {
     instagram: "https://instagram.com/magicuidesign/",
   },
   header: [
-    {
+    /*{
       trigger: "Features",
       content: {
         main: {
@@ -45,7 +45,7 @@ export const siteConfig = {
           },
         ],
       },
-    },
+    },*/
     /*{
       trigger: "Solutions",
       content: {

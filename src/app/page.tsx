@@ -18,17 +18,17 @@ export default function Home() {
   return (
     <main>
       <Header />
-      <NewHero />
+      {/*<NewHero />*/}
       <Hero />
       {/* <Logos /> */}
       <Problem />
       {/*<Solution />*/}
-      <HowItWorks />
+      {/*<HowItWorks />*/}
       {/*<TestimonialsCarousel />*/}
       {/*<Features />*/}
       {/*<Testimonials />*/}
       {/*<Pricing />*/}
-      <FAQ />
+      {/*<FAQ />*/}
       {/*<Blog />*/}
       <CTA />
       <Footer />

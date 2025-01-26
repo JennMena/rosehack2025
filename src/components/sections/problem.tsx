@@ -1,34 +1,35 @@
 import BlurFade from "@/components/magicui/blur-fade";
 import Section from "@/components/section";
 import { Card, CardContent } from "@/components/ui/card";
-import { Brain, Shield, Zap } from "lucide-react";
+import { MessageCircleQuestion, MessageSquareWarning, Zap } from "lucide-react";
 
 const problems = [
   {
-    title: "Data Overload",
+    title: "Post-Pandemic Social Anxiety",
     description:
-      "Businesses struggle to make sense of vast amounts of complex data, missing out on valuable insights that could drive growth and innovation.",
-    icon: Brain,
+      "The COVID-19 pandemic has left many individuals struggling with social anxiety and communication challenges, as isolation and remote work have hindered social skill development.",
+    icon: MessageCircleQuestion,
   },
   {
-    title: "Slow Decision-Making",
+    title: "Career Barriers",
     description:
-      "Traditional data processing methods are too slow, causing businesses to lag behind market changes and miss crucial opportunities.",
+      "This increase in social anxiety manifests in professional settings, making networking, interviews, and everyday work interactions more challenging, often hindering career growth and progression.",
+    icon: MessageSquareWarning,
+  },
+  {
+    title: "Personalized AI Practice",
+    description:
+      "Our app offers a solution by providing personalized practice for interviews, networking, and small talk. AI-driven feedback and progress tracking help users improve their social skills and break through career barriers.",
     icon: Zap,
-  },
-  {
-    title: "Data Security Concerns",
-    description:
-      "With increasing cyber threats, businesses worry about the safety of their sensitive information when adopting new technologies.",
-    icon: Shield,
   },
 ];
 
 export default function Component() {
   return (
     <Section
-      title="Problem"
-      subtitle="Manually entering your data is a hassle."
+      id="motivation"
+      title="Problem & Solution"
+      subtitle="Conquer social anxiety and boost your career."
     >
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
         {problems.map((problem, index) => (

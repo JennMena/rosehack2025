@@ -4,106 +4,92 @@ import { UserButton, useUser } from "@clerk/nextjs";
 import { useState } from "react";
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { app } from "@/firebaseConfig";
-import { collection, getFirestore } from "firebase/firestore";
-import { extractPdfContent } from "@/app/api/extractText/route";
+import { collection, doc, getFirestore, setDoc } from "firebase/firestore";
 
 const ProfileSetup = () => {
-  const [resume, setResume] = useState<File | null>(null);
   const [message, setMessage] = useState<string>("");
   const [textInput, setTextInput] = useState<string>("");
+  const [resumeInput, setResumeInput] = useState<string>("");
+  const [extractedResumeData, setExtractedResumeData] = useState<string>("");
 
   const user = useUser();
   const email = user.user?.primaryEmailAddress || "";
   const name = user.user?.firstName || "";
   const userID = user.user?.id || "";
 
-  const storage = getStorage(app);
   const db = getFirestore(app);
   const usersDataRef = collection(db, "usersData");
-  const [resumeURL, setResumeURL] = useState<string>("");
 
 
-  // Handle resume file upload
-  const handleResumeUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files ? event.target.files[0] : null;
-    setResume(file);
-  };
-
-  const uploadFileToStorage = async (file: any): Promise<string> => {
-    return new Promise((resolve, reject) => {
-      // Create a reference to the location in storage
-      const fileName = file.name + "-" + userID;
-      const storageRef = ref(storage, 'uploads/' + fileName);
-
-      // Upload the file
-      const uploadTask = uploadBytesResumable(storageRef, file);
-
-      uploadTask.on(
-        'state_changed',
-        (snapshot) => {
-          // Optional: Track upload progress
-          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log(`Upload is ${progress}% done`);
-        },
-        (error) => {
-          // Handle any errors during upload
-          console.error(error);
-          reject(error);
-        },
-        async () => {
-          // Get the download URL when upload is complete
-          const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-          console.log('File available at', downloadURL);
-          resolve(downloadURL);
-        }
-      );
-    });
-  };
-
-  // Handle social style selection
   const handleTextInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTextInput(event.target.value);
   };
 
+  const handleResumeInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setResumeInput(event.target.value);
+  };
+
+  // Function to save the data to Firestore
+  const saveInfoDB = async (extractedData: any) => {
+    try {
+      // Convert extracted data and textInput to the format that will be stored in Firestore
+      const resumeData = {
+        roles: extractedData.roles || [],
+        overallJobTitle: extractedData.overallJobTitle || "",
+        workExperience: extractedData.workExperience || [],
+        skills: extractedData.skills || [],
+        projects: extractedData.projects || [],
+        interests: extractedData.interests || [],
+        strengths: extractedData.strengths || "",
+        weaknesses: extractedData.weaknesses || "",
+      };
+
+      // Save data to Firestore
+      const userDocRef = doc(usersDataRef, userID);
+      await setDoc(userDocRef, {
+        resumeData,
+        personalInfo: textInput, // Store the personal info (textInput)
+        name,
+      });
+
+      console.log("SAVED TO DB")
+    } catch (error) {
+      console.error("Error saving to Firestore:", error);
+      setMessage("An error occurred while saving data.");
+    }
+  };
+
   const handleSave = async () => {
-    if (!resume || !textInput) {
+    if (!resumeInput || !textInput) {
       setMessage("Please fill out all fields.");
       return;
     }
 
     try {
-      // Upload the file and get the URL
-      const url = await uploadFileToStorage(resume);
-      setResumeURL(url);
-      console.log("Uploaded file URL:", url);
-
-      // Extract and save PDF content via API route
-      const response = await fetch('/api/extractText', {
+      const response = await fetch('/api/extract-resume', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ fileUrl: url }),
+        body: JSON.stringify({ resumeContent: resumeInput }),
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to extract PDF content');
-      }
-
       const data = await response.json();
-      const pdfContent = data.text;
-      console.log("Extracted PDF Content:", pdfContent);
 
-      // Save to database (mocked below)
-      // await addDoc(usersDataRef, { userID, email, resumeURL: url, socialStyle: textInput, pdfContent });
-      setMessage("Profile saved successfully!");
+      console.log(data);
+
+      if (data.error) {
+        setMessage('Failed to extract resume data.');
+      } else {
+        setExtractedResumeData(data.data); // Store the extracted resume data
+        await saveInfoDB(data.data); // Save the extracted data to Firestore
+      }
     } catch (error) {
-      console.error("Error saving profile:", error);
-      setMessage("Failed to save profile. Please try again.");
+      setMessage('An error occurred while extracting data.');
+      console.error('Error:', error);
     }
+    setMessage('Successfully extracted and saved your information.');
   };
-
-
 
   return (
     <div className="h-center w-center w-2/3 mx-auto ">
@@ -131,7 +117,7 @@ const ProfileSetup = () => {
       {/* Personal preferences */}
       <div className="mb-3">
         <label htmlFor="social-style" className="block text-lg font-medium mb-2">
-          Tell me a bit about yourself and your social skills goals
+          Tell me a bit about yourself and your goals
         </label>
         <textarea
           onChange={handleTextInput}
@@ -142,18 +128,19 @@ const ProfileSetup = () => {
       </div>
 
 
-      {/* Resume upload */}
-      <div className="mb-4">
-
-        <label htmlFor="resume-upload" className="block text-lg font-medium">Upload Your Resume</label>
-        <input
-          type="file"
+      {/* Resume Content Upload */}
+      <div className="mb-3">
+        <label htmlFor="resume-upload" className="block text-lg font-medium mb-2">
+          Upload your resume
+        </label>
+        <textarea
+          onChange={handleResumeInput}
           id="resume-upload"
-          accept=".pdf,.doc,.docx"
-          onChange={handleResumeUpload}
-          className="mt-2 p-2 border border-gray-300 rounded-md w-full"
-        />
+          placeholder="Paste the content of your resume here. Include your professional experience, skills, and achievements."
+          className="w-full p-3 border rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 resize-none h-28 "
+        ></textarea>
       </div>
+
 
       {/* Save button */}
       <div className="mb-4">
@@ -165,7 +152,10 @@ const ProfileSetup = () => {
       </div>
 
       {/* Success/Error message */}
-      {message && <p className="text-center text-lg text-red-500">{message}</p>}
+      <div className="mb-3">
+        {message && <p className="text-center text-lg text-red-500">{message}</p>}
+      </div>
+
     </div>
   );
 };

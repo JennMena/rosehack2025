@@ -37,7 +37,7 @@ const AppBar: React.FC = () => {
                 <div className="h-full px-3 py-4 overflow-y-auto bg-gray-100 dark:bg-gray-800 shadow-lg">
                     <a href="#" className="flex items-center ps-2.5 mb-5">
                         <img
-                            src="https://flowbite.com/docs/images/logo.svg"
+                            src="/Logo.png"
                             className="h-6 me-3 sm:h-7"
                             alt={siteConfig.name}
                         />
