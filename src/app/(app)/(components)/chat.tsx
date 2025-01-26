@@ -46,7 +46,7 @@ const ChatArea: React.FC<ChatAreaProps> = ({ message, messages, setMessages, set
             </div>
 
             {/* Chat Messages */}
-            <div className="bg-[#f3f3f3] dark:bg-[#444] p-4 rounded-lg h-[400px] overflow-auto">
+            <div className="bg-[#e2ebad] dark:bg-[#444] p-4 rounded-lg h-[400px] overflow-auto">
                 <div className="flex flex-col gap-4">
                     {messages.map((msg, index) => (
                         <div key={index} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'} gap-4`}>
