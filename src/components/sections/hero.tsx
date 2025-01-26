@@ -144,9 +144,9 @@ export default function Hero2() {
   return (
     <section id="hero">
       <div className="relative flex w-full h-screen flex-col items-center justify-start px-4 pt-32 sm:px-6 sm:pt-24 md:pt-32 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 w-full h-full">
+        <div className="grid grid-cols-1 lg:grid-cols-2 w-full h-full">
           {/* Left Column: Text Content */}
-          <div className="flex flex-col space-y-4 mr-[-5rem]">
+          <div className="flex flex-col space-y-4 mr-[-5rem] ml-7">
             <div className="flex justify-center w-full">
               <div className="flex items-center">
                 <HeroPill />
@@ -160,7 +160,7 @@ export default function Hero2() {
           </div>
           {/* Right Column: Image */}
           <div className="md:block hidden">
-            <div className="flex justify-center h-full">
+            <div className="flex justify-center h-full mr-7">
               <Image
                 src="/AnnetteFull.png"
                 alt="Annette"

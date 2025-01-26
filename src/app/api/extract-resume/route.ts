@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { OpenAI } from 'openai'; // Ensure you have OpenAI package installed
-
+import { Timestamp } from "firebase/firestore";
 const openaiClient = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });

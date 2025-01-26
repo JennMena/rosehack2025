@@ -1,12 +1,50 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ChatArea from '../(components)/chat';
+import { useUser } from '@clerk/nextjs';
+import { AlertCircle } from 'lucide-react';
+import toast from 'react-hot-toast';
+import { collection, doc, getDoc, getFirestore } from 'firebase/firestore';
+import { app } from '@/firebaseConfig';
+
+const INITIAL_ASSISTANT_MESSAGE = "Hi! I'm Annette, and I'll be your interviewer today. Let’s start with a quick introduction—tell me a bit about yourself!"
+const ERROR_ASSISTANT_MESSAGE = "I'm sorry, but I encountered an error. Please try again."
+
+
+interface Context {
+    company: string,
+    values: string;
+    position: string;
+    interviewer: string;
+    resume: string;
+    personalinfo: string;
+}
+
+export type MessageRole = 'system' | 'user' | 'assistant';
+
+export interface ChatMessage {
+    content: string;
+    role: MessageRole;
+}
 
 const DashboardPage: React.FC = () => {
     const [company, setCompany] = useState<string>("");
     const [values, setValues] = useState<string>("");
     const [position, setPosition] = useState<string>("");
     const [interviewer, setInterviewer] = useState<string>("");
+
+    const [messages, setMessages] = useState<ChatMessage[]>([]);
+    const [message, setMessage] = useState('');
+    const { user } = useUser();
+
+    const [chatStarted, setChatStarted] = useState<boolean>(false);;
+
+    const userID = user?.id || "";
+
+    const [context, setContext] = useState<Context | undefined>(undefined);
+
+    const db = getFirestore(app);
+    const usersDataRef = collection(db, "usersData");
 
     const handleCompany = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         setCompany(event.target.value);
@@ -23,6 +61,147 @@ const DashboardPage: React.FC = () => {
     const handleInterviewer = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         setInterviewer(event.target.value);
     };
+
+    const contextCollection = async () => {
+        try {
+            console.log(userID)
+            const userDoc = await getDoc(doc(usersDataRef, userID));
+            if (userDoc.exists()) {
+                const userData = userDoc.data();
+                const context: Context = {
+                    company,
+                    values,
+                    position,
+                    interviewer,
+                    resume: userData.resumeData,
+                    personalinfo: userData.personalInfo,
+                };
+                console.log(context);
+                return context;
+            } else {
+                console.error("No such document!");
+                console.error(userID)
+                const context_half: Context = {
+                    company,
+                    values,
+                    position,
+                    interviewer,
+                    resume: '',
+                    personalinfo: ''
+                }
+                return context_half
+            }
+        } catch (error) {
+            console.error("Error getting document:", error);
+        }
+    };
+
+    const startNewConversation = async () => {
+        const initialAssistantMessage: ChatMessage = {
+            role: 'assistant',
+            content: INITIAL_ASSISTANT_MESSAGE,
+        };
+        setMessages([initialAssistantMessage]);
+
+    }
+
+    const sendMessages = async () => {
+        if (!message.trim()) {
+            setMessage('');
+            toast.custom((t) => (
+                <div
+                    className={`${t.visible ? 'animate-enter' : 'animate-leave'
+                        } max-w-md w-sm bg-yellow-100 border border-yellow-400 text-yellow-800 px-4 py-2 rounded-lg shadow-lg`}
+                    style={{ animationDuration: '1s' }}
+                >
+                    <div className="flex items-center">
+                        <AlertCircle className="w-5 h-5 text-yellow-800" />
+                        <div className="ml-2">
+                            Oops! It looks like you forgot to type something.
+                        </div>
+                    </div>
+                </div>
+            ), { duration: 1500 });
+            return;
+        }
+
+        const userMessage: ChatMessage = {
+            role: 'user',
+            content: message,
+        };
+
+        setMessages((prevMessages) => [
+            ...prevMessages,
+            userMessage,
+            { role: 'assistant', content: '' }
+        ]);
+        setMessage('');
+
+        try {
+            // Send the user's message to the API endpoint for processing
+            const response = await fetch('/api/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                //body: JSON.stringify({ messages: [...messages, userMessage] }),
+                body: JSON.stringify({ question: userMessage.content, messages, context }),
+            });
+
+            if (!response.ok) {
+                toast.error('Failed to send the message.');
+                console.error('Error:', response.statusText);
+                return;
+            }
+
+            const reader = response.body!.getReader(); // Create a reader to process the streamed response
+            const decoder = new TextDecoder(); // Create a decoder to convert the streamed response into text
+            let assistantResponse = '';
+
+            // Process the text from the response
+            while (true) {
+                const { done, value } = await reader.read();
+                if (done) break;
+                const text = decoder.decode(value, { stream: true }); // Decode the streamed response
+                assistantResponse += text;
+                setMessages((messages) => {
+                    let lastMessage = messages[messages.length - 1];  // Get the last message (assistant's placeholder)
+                    let otherMessages = messages.slice(0, messages.length - 1);  // Get all other messages
+                    return [
+                        ...otherMessages,
+                        { ...lastMessage, content: assistantResponse },  // Append the decoded text to the assistant's message
+                    ]
+                })
+            }
+
+        } catch (error) {
+            const assistantMessage: ChatMessage = {
+                role: 'assistant',
+                content: ERROR_ASSISTANT_MESSAGE,
+            };
+            setMessages((messages) => [
+                ...messages,
+                assistantMessage
+            ]);
+            console.error('Error:', error);
+        }
+
+    };
+
+    useEffect(() => {
+        const fetchData = async () => {
+            if (user) {
+                startNewConversation();
+                if (chatStarted) {
+                    const new_context = await contextCollection();
+                    setContext(new_context)
+                    console.log(context)
+
+                }
+            }
+        };
+        fetchData();
+    }, [user, chatStarted]);
 
     return (
         <div className=" relative">
@@ -156,7 +335,15 @@ const DashboardPage: React.FC = () => {
                 </div>
             </div>
             <div className='mt-[-5rem]'>
-                <ChatArea />
+                <ChatArea
+                    sendMessages={sendMessages}
+                    message={message}
+                    messages={messages}
+                    setMessages={setMessages}
+                    setMessage={setMessage}
+                    user={user}
+                    setChatStarted={setChatStarted}
+                />
             </div>
 
 
