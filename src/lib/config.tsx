@@ -10,13 +10,6 @@ export const siteConfig = {
   description: "Level up your social skills with AI-powered conversation practice",
   url: process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
   keywords: ["SaaS", "Template", "Next.js", "React", "Tailwind CSS"],
-  links: {
-    email: "support@acme.ai",
-    twitter: "https://twitter.com/magicuidesign",
-    discord: "https://discord.gg/87p2vpsat5",
-    github: "https://github.com/magicuidesign/magicui",
-    instagram: "https://instagram.com/magicuidesign/",
-  },
   header: [
     /*{
       trigger: "Features",

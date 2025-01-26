@@ -123,7 +123,7 @@ const ProfileSetup = () => {
           onChange={handleTextInput}
           id="social-style"
           placeholder="Feel free to share any details about who you are, your interests, and what you'd like to work on in the social skills area."
-          className="w-full p-3 border rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 resize-none h-20 "
+          className="w-full p-3 border bg-[#e2ebad] dark:bg-[#444] rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 resize-none h-20 "
         ></textarea>
       </div>
 
@@ -137,7 +137,7 @@ const ProfileSetup = () => {
           onChange={handleResumeInput}
           id="resume-upload"
           placeholder="Paste the content of your resume here. Include your professional experience, skills, and achievements."
-          className="w-full p-3 border rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 resize-none h-28 "
+          className="w-full p-3  bg-[#e2ebad] dark:bg-[#444] border rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 resize-none h-28 "
         ></textarea>
       </div>
 

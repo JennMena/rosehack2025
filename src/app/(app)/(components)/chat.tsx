@@ -72,7 +72,7 @@ const ChatArea: React.FC<ChatAreaProps> = ({ message, messages, setMessages, set
                 <textarea
                     value={message}
                     onChange={handleMessageChange}
-                    className="w-full h-20 p-4 bg-[#f3f3f3] dark:bg-[#444] border border-[#606c38] rounded-lg text-lg text-[#412207] dark:text-gray-300  resize-none"
+                    className="w-full h-20 p-4 bg-[#e2ebad] dark:bg-[#444] border border-[#606c38] rounded-lg text-lg text-[#412207] dark:text-gray-300  resize-none"
                     placeholder="Type your message..."
                 ></textarea>
                 <button

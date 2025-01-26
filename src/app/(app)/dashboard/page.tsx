@@ -285,7 +285,7 @@ const DashboardPage: React.FC = () => {
                         </div>
                         <textarea
                             onChange={handleCompany}
-                            className="w-full h-[100px] p-4 mt-2 bg-[#f3f3f3] dark:bg-[#444] border border-[#606c38] rounded-lg text-lg text-[#412207] dark:text-gray-300  resize-none"
+                            className="w-full h-[100px] p-4 mt-2 bg-[#e2ebad] dark:bg-[#444] border border-[#606c38] rounded-lg text-lg text-black dark:text-gray-300  resize-none"
                             placeholder="Enter the company's name..."
                         ></textarea>
                     </div>
@@ -297,7 +297,7 @@ const DashboardPage: React.FC = () => {
                         </div>
                         <textarea
                             onChange={handleValues}
-                            className="w-full h-[100px] p-4 mt-2 bg-[#f3f3f3] dark:bg-[#444] border border-[#606c38] rounded-lg text-lg text-[#412207] dark:text-gray-300  resize-none"
+                            className="w-full h-[100px] p-4 mt-2 bg-[#e2ebad] dark:bg-[#444] border border-[#606c38] rounded-lg text-lg text-[#412207] dark:text-gray-300  resize-none"
                             placeholder="Visit the company website, and take a look at the “About” or “Meet the Team” section for insights."
                         ></textarea>
                     </div>
@@ -309,7 +309,7 @@ const DashboardPage: React.FC = () => {
                         </div>
                         <textarea
                             onChange={handlePosition}
-                            className="w-full h-[100px] p-4 mt-2 bg-[#f3f3f3] dark:bg-[#444] border border-[#606c38] rounded-lg text-lg text-[#412207] dark:text-gray-300  resize-none"
+                            className="w-full h-[100px] p-4 mt-2 bg-[#e2ebad] dark:bg-[#444] border border-[#606c38] rounded-lg text-lg text-[#412207] dark:text-gray-300  resize-none"
                             placeholder="Consider the type of candidate the company is seeking. What are the key qualifications and skills they prioritize?"
                         ></textarea>
                     </div>
@@ -321,7 +321,7 @@ const DashboardPage: React.FC = () => {
                         </div>
                         <textarea
                             onChange={handleInterviewer}
-                            className="w-full h-[100px] p-4 mt-2 bg-[#f3f3f3] dark:bg-[#444] border border-[#606c38] rounded-lg text-lg text-[#412207] dark:text-gray-300  resize-none"
+                            className="w-full h-[100px] p-4 mt-2 bg-[#e2ebad] dark:bg-[#444] border border-[#606c38] rounded-lg text-lg text-[#412207] dark:text-gray-300  resize-none"
                             placeholder="If possible, gather information such as their LinkedIn profile or articles they’ve written to tailor your responses."
                         ></textarea>
                     </div>
