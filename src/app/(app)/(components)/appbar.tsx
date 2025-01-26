@@ -91,11 +91,11 @@ const AppBar: React.FC = () => {
             </aside>
 
             {/* Main Content */}
-            <div className="p-4 sm:ml-64">
+            {/*<div className="p-4 sm:ml-64">
                 <div className="p-4 border-2 border-[var(--border)]">
-                    {/* Content Goes Here */}
+                    <p></p>
                 </div>
-            </div>
+            </div>*/}
         </>
     );
 };

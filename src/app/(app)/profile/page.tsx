@@ -35,16 +35,16 @@ const ProfileSetup = () => {
   };
 
   return (
-    <div className="max-w-xl mx-auto p-6 rounded-lg shadow-lg">
-      <h2 className="text-2xl font-semibold text-center mb-4">Welcome  {name}!</h2>
+    <div className="h-center w-center ">
+      <div className="align-middle mb-2 text-center">
+        <div className="inline-block transform scale-150">
+          <UserButton />
+        </div>
+      </div>
+      <h2 className="text-3xl font-semibold text-center mb-7 mt-7">Welcome  {name}!</h2>
 
       {/* Resume upload */}
       <div className="mb-4">
-        <div className="align-middle mb-2 text-center">
-          <div className="inline-block transform scale-150">
-            <UserButton />
-          </div>
-        </div>
 
         <label htmlFor="resume-upload" className="block text-lg font-medium text-gray-700">Upload Your Resume</label>
         <input

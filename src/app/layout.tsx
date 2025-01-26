@@ -25,26 +25,30 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning>
         <head>
-          <link rel="preconnect" href="https://rsms.me/" />
-          <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
-        </head>
-        <body
-          className={cn(
-            "min-h-screen bg-background antialiased w-full mx-auto scroll-smooth"
-          )}
-        >
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="light"
-            enableSystem={false}
-          >
-            {children}
-            <ThemeToggle />
-            <TailwindIndicator />
-          </ThemeProvider>
-        </body>
-      </html>
-    </ClerkProvider>
+          {/* Import Lexend font from Google Fonts */}
+          <link rel="preconnect" href="https://fonts.googleapis.com"/>
+            <link rel="preconnect" href="https://fonts.gstatic.com"/>
+              <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap" rel="stylesheet"/>
+              <link rel="preconnect" href="https://rsms.me/" />
+              <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+            </head>
+            <body
+              className={cn(
+                "min-h-screen bg-background antialiased w-full mx-auto scroll-smooth"
+              )}
+            >
+              <ThemeProvider
+                attribute="class"
+                defaultTheme="light"
+                enableSystem={false}
+              >
+                {children}
+                <ThemeToggle />
+                <TailwindIndicator />
+              </ThemeProvider>
+            </body>
+          </html>
+        </ClerkProvider>
 
-  );
+        );
 }
