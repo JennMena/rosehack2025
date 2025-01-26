@@ -8,7 +8,7 @@ export default async function Layout({ children }: MarketingLayoutProps) {
   return (
     <div>
       <AppBar />
-      <main className="flex flex-col items-center justify-center h-screen ml-[var(--navbar-width)]">
+      <main className="flex flex-col items-center justify-center h-full ml-[var(--navbar-width)] pt-8">
         {children}
       </main>
     </div>
