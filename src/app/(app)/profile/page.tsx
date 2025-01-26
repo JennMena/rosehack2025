@@ -5,10 +5,10 @@ import { useState } from "react";
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { app } from "@/firebaseConfig";
 import { collection, getFirestore } from "firebase/firestore";
+import { extractPdfContent } from "@/app/api/extractText/route";
 
 const ProfileSetup = () => {
   const [resume, setResume] = useState<File | null>(null);
-  const [linkedin, setLinkedin] = useState<string>("");
   const [message, setMessage] = useState<string>("");
   const [textInput, setTextInput] = useState<string>("");
 
@@ -29,39 +29,35 @@ const ProfileSetup = () => {
     setResume(file);
   };
 
-  const uploadFileToStorage = (file: any) => {
-    // Create a reference to the location in storage
-    const fileName = file.name + "-" + userID;
-    const storageRef = ref(storage, 'uploads/' + fileName);
+  const uploadFileToStorage = async (file: any): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      // Create a reference to the location in storage
+      const fileName = file.name + "-" + userID;
+      const storageRef = ref(storage, 'uploads/' + fileName);
 
-    // Upload the file
-    const uploadTask = uploadBytesResumable(storageRef, file);
+      // Upload the file
+      const uploadTask = uploadBytesResumable(storageRef, file);
 
-    uploadTask.on(
-      'state_changed',
-      (snapshot) => {
-        // Optional: Track upload progress
-        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log(`Upload is ${progress}% done`);
-      },
-      (error) => {
-        // Handle any errors during upload
-        console.error(error);
-      },
-      () => {
-        // Get the download URL when upload is complete
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+      uploadTask.on(
+        'state_changed',
+        (snapshot) => {
+          // Optional: Track upload progress
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log(`Upload is ${progress}% done`);
+        },
+        (error) => {
+          // Handle any errors during upload
+          console.error(error);
+          reject(error);
+        },
+        async () => {
+          // Get the download URL when upload is complete
+          const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
           console.log('File available at', downloadURL);
-          setResumeURL(downloadURL);
-        });
-      }
-    );
-  };
-
-
-  // Handle social style selection
-  const handleLinkedin = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setLinkedin(event.target.value);
+          resolve(downloadURL);
+        }
+      );
+    });
   };
 
   // Handle social style selection
@@ -69,19 +65,45 @@ const ProfileSetup = () => {
     setTextInput(event.target.value);
   };
 
-  // Save profile information
-  const handleSave = () => {
-    if (!resume || !linkedin || !linkedin.trim()) {
+  const handleSave = async () => {
+    if (!resume || !textInput) {
       setMessage("Please fill out all fields.");
       return;
     }
-    uploadFileToStorage(resume);
 
+    try {
+      // Upload the file and get the URL
+      const url = await uploadFileToStorage(resume);
+      setResumeURL(url);
+      console.log("Uploaded file URL:", url);
 
+      // Extract and save PDF content via API route
+      const response = await fetch('/api/extractText', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ fileUrl: url }),
+      });
 
-    // Here you would typically send the data to the backend
-    setMessage("Profile saved successfully!");
+      if (!response.ok) {
+        throw new Error('Failed to extract PDF content');
+      }
+
+      const data = await response.json();
+      const pdfContent = data.text;
+      console.log("Extracted PDF Content:", pdfContent);
+
+      // Save to database (mocked below)
+      // await addDoc(usersDataRef, { userID, email, resumeURL: url, socialStyle: textInput, pdfContent });
+      setMessage("Profile saved successfully!");
+    } catch (error) {
+      console.error("Error saving profile:", error);
+      setMessage("Failed to save profile. Please try again.");
+    }
   };
+
+
 
   return (
     <div className="h-center w-center w-2/3 mx-auto ">
@@ -100,7 +122,7 @@ const ProfileSetup = () => {
         </div>
         <div className="list-disc pl-6 text-gray-700 dark:text-gray-300">
           <p className="text-base">
-          Tell us a bit about yourself to help us personalize your practice sessions and create the best experience for improving your social skills for your career goals.
+            Tell us a bit about yourself to help us personalize your practice sessions and create the best experience for improving your social skills for your career goals.
           </p>
         </div>
       </div>
@@ -133,27 +155,11 @@ const ProfileSetup = () => {
         />
       </div>
 
-      {/* LinkedIn upload */}
-      <div className="mb-4">
-
-        <label htmlFor="linkedin" className="block text-lg font-medium">Share your LinkedIn</label>
-        <input
-          type="text"
-          id="linkedin"
-          accept=".pdf,.doc,.docx"
-          onChange={handleLinkedin}
-          className="mt-2 p-2 border border-gray-300 rounded-md w-full"
-        />
-      </div>
-
-
-
       {/* Save button */}
       <div className="mb-4">
         <button
           onClick={handleSave}
-          className="w-full py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-200"
-        >
+          className="w-full py-2 bg-[hsl(30,69.1%,48.2%)] text-white rounded-md hover:bg-[hsl(30,66%,55%)] transition duration-200">
           Save
         </button>
       </div>
